@@ -1,5 +1,6 @@
 //jshint esversion:6
-
+require('dotenv').config();
+const { CLUSTER_PASS } = process.env;
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -20,8 +21,9 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-mongoose.connect('mongodb://127.0.0.1/blogDB')
-
+mongoose.connect(`mongodb+srv://facundoaragon:${CLUSTER_PASS}@cluster0.ab3p0xf.mongodb.net/blogDB`)
+.then(()=>console.log("Database connected"))
+.catch((err)=>console.log(err))
 
 app.get("/", async function(req, res){
   try {
